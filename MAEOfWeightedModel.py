@@ -3,11 +3,15 @@ import csv
 from netCDF4 import Dataset
 
 #reading netcdf
-netcdf_entire_dataset = Dataset("F:/dataset/rain_data/summing_dataset.nc", "r")
+netcdf_entire_dataset = Dataset("summing_dataset.nc", "r")
 rain_models = netcdf_entire_dataset.variables['summing_models']
-models_error_rate_file = netcdf_entire_dataset.variables['models'][:]
+# models_error_rate_file = netcdf_entire_dataset.variables['models'][:]
 
-with open('random70.csv') as csvf:
+#reading netcdf
+netcdf_entire_dataset2 = Dataset("mae_weighted_model.nc", "r")
+rain_models = netcdf_entire_dataset2.variables['weighted_model']
+
+with open('random30.csv') as csvf:
     ind70 = csv.reader(csvf)
     indexi70 = list(ind70)
     index70 = indexi70[0]
@@ -16,16 +20,12 @@ np.set_printoptions(formatter={'float': '{: 0.4f}'.format})
 np.seterr(divide='ignore', invalid='ignore')
 
 #creating csv file
-check = open('MAE_70_25x25.csv', 'w')
+check = open('Model1_MAE.csv', 'w') #Model 1 means MAE based model, Model 2 means RMSE based model
 check.truncate()
 # writing the headers
 check.write(str('Y'))
 check.write(', ')
 check.write(str('X'))
-check.write(', ')
-for i in range(1, len(models_error_rate_file)):
-    check.write(str(models_error_rate_file[i]))
-    check.write(', ')
 check.write('\n')
 
 for y in range(46): # 46 y-coordinates
@@ -43,9 +43,9 @@ for y in range(46): # 46 y-coordinates
             print('Y:', y, 'X:', x, 'model:', i)
             original_data = []
             rain100 = []
-            for d in index70:
-                original_data.append(np.array(rain_models[d, :10, 0, y, x])) # real data
-                rain100.append(np.array(rain_models[d, :10, i, y, x])) # model data
+            for i in index70:
+                original_data.append(np.array(rain_models[i, :10, 0, y, x])) # real data
+                rain100.append(np.array(rain_models[i, :10, i, y, x])) # model data
 
             a = abs(np.array(original_data) - np.array(rain100)) # taking the absolute value
             # print(len(a), len(a[0]))

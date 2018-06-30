@@ -48,9 +48,9 @@ for y in range(46): # 46 y-coordinates
             print('Y:', y, 'X:', x, 'model:', i)
             original_data = []
             rain100 = []
-            for i in index70:
-                original_data.append(np.array(rain_models[i, :10, 0, y, x]))  # real data
-                rain100.append(np.array(rain_models[i, :10, i, y, x]))  # model data
+            for d in index70:
+                original_data.append(np.array(rain_models[d, :10, 0, y, x]))  # real data
+                rain100.append(np.array(rain_models[d, :10, i, y, x]))  # model data
             # rain100[rain100>30000] = np.nan
 
             # print(sqrt(power(abs(original_data - rain100), 2)))
