@@ -5,7 +5,7 @@ from sklearn.metrics import *
 from numpy import *
 
 #reading netcdf
-netcdf_entire_dataset = Dataset("F:/dataset/rain_data/summing_dataset.nc", "r")
+netcdf_entire_dataset = Dataset("summing_dataset.nc", "r")
 rain_models = netcdf_entire_dataset.variables['summing_models']
 days_error_rate_file = netcdf_entire_dataset.variables['days'][:]
 time_error_rate_file = netcdf_entire_dataset.variables['time'][:]

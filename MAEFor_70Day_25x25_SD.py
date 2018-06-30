@@ -3,7 +3,7 @@ import csv
 from netCDF4 import Dataset
 
 #reading netcdf
-netcdf_entire_dataset = Dataset("F:/dataset/rain_data/summing_dataset.nc", "r")
+netcdf_entire_dataset = Dataset("summing_dataset.nc", "r")
 rain_models = netcdf_entire_dataset.variables['summing_models']
 models_error_rate_file = netcdf_entire_dataset.variables['models'][:]
 
