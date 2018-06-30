@@ -17,22 +17,22 @@ x_axis = dataset.createDimension('x_axis', 67)
 days = dataset.createVariable('days', "S10",("days"),zlib=True)
 time = dataset.createVariable('time', "S10",("time"),zlib=True)
 weighted_model = dataset.createVariable("weighted_model","f4",("days","time","y_axis","x_axis"),zlib=True)
-
-# writing days
-i = 0
-for day in glob.glob("F:/dataset/rain_data/verification/*"):
-    # print(basename(day))
-    days[i] = basename(day)
-    i = i + 1
-print(days[:])
-
-#writing times
-i = 0
-for second in glob.glob("F:/dataset/rain_data/verification/20160421/*"):
-    # print(basename(second).split('_')[1]))
-    time[i] = basename(second).split('_')[1]
-    i = i + 1
-print(time[:])
+#
+# # writing days
+# i = 0
+# for day in glob.glob("F:/dataset/rain_data/verification/*"):
+#     # print(basename(day))
+#     days[i] = basename(day)
+#     i = i + 1
+# print(days[:])
+#
+# #writing times
+# i = 0
+# for second in glob.glob("F:/dataset/rain_data/verification/20160421/*"):
+#     # print(basename(second).split('_')[1]))
+#     time[i] = basename(second).split('_')[1]
+#     i = i + 1
+# print(time[:])
 
 #reading netcdf
 # error_rate_file = "F:/dataset/mae.nc"
