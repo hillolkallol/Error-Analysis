@@ -6,7 +6,7 @@ from netCDF4 import Dataset
 import pandas as pd
 np.seterr(divide='ignore', invalid='ignore')
 
-dataset = Dataset("mae_weighted_model.nc", "w", format="NETCDF4")
+dataset = Dataset("rmse_weighted_model.nc", "w", format="NETCDF4")
 dataset.set_auto_mask(False)
 
 days = dataset.createDimension('days', 39)
@@ -39,7 +39,7 @@ weighted_model = dataset.createVariable("weighted_model","f4",("days","time","y_
 # netcdf_error_rate_file = Dataset(error_rate_file)
 # Total_MAE = netcdf_error_rate_file.variables['Total_MAE'][:]
 
-MAE = pd.read_csv('MAE_70_25x25.csv', header=None)
+RMSE = pd.read_csv('RMSE_70_25x25.csv', header=None)
 # rmse = pd.to_numeric(np.array(MAE[2])[1:]).reshape((46, 67))
 
 #reading netcdf
@@ -65,7 +65,7 @@ for i in index30:
         for k in range(1, len(models_error_rate_file)):
             print(i, j, k)
             a = rain_models[i,j,k,:,:]
-            b = np.array(pd.to_numeric(MAE[k+1], errors='coerce').fillna(0))[1:].reshape((46, 67))
+            b = np.array(pd.to_numeric(RMSE[k+1], errors='coerce').fillna(0))[1:].reshape((46, 67))
             # b = b + 1
             a[a > 30000] = np.nan
             b[b > 30000] = np.nan
