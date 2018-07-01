@@ -66,19 +66,19 @@ for i in index30:
             print(i, j, k)
             a = rain_models[i,j,k,:,:]
             b = np.array(pd.to_numeric(MAE[k+1], errors='coerce').fillna(0))[1:].reshape((46, 67))
-            # b = b + 1
-            a[a > 30000] = np.nan
-            b[b > 30000] = np.nan
-            # print(a)
+            b = b + 1
+            a[a > 300000] = np.nan
+            b[b > 300000] = np.nan
+            print(a)
             # print(b)
             if not np.isnan(a).all():
                 numerator = np.array(a) / np.array(b)
                 denominator = 1 / np.array(b)
                 # denominator[denominator > 1000] = 0
-                # numerator[np.isnan(numerator)] = 0
-                # numerator[np.isinf(numerator)] = 0
-                # denominator[np.isnan(denominator)] = 0
-                # denominator[np.isinf(denominator)] = 0
+                numerator[np.isnan(numerator)] = 0
+                numerator[np.isinf(numerator)] = 0
+                denominator[np.isnan(denominator)] = 0
+                denominator[np.isinf(denominator)] = 0
                 # print(numerator)
                 # print(b)
                 # print(denominator)
