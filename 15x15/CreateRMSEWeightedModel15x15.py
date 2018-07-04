@@ -6,7 +6,7 @@ from netCDF4 import Dataset
 import pandas as pd
 np.seterr(divide='ignore', invalid='ignore')
 
-dataset = Dataset("mae_weighted_model_15x15.nc", "w", format="NETCDF4")
+dataset = Dataset("rmse_weighted_model.nc_15x15", "w", format="NETCDF4")
 dataset.set_auto_mask(False)
 
 days = dataset.createDimension('days', 39)
@@ -39,7 +39,7 @@ weighted_model = dataset.createVariable("weighted_model","f4",("days","time","y_
 # netcdf_error_rate_file = Dataset(error_rate_file)
 # Total_MAE = netcdf_error_rate_file.variables['Total_MAE'][:]
 
-MAE = pd.read_csv('MAE_70_15x15.csv', header=None)
+RMSE = pd.read_csv('RMSE_70_15x15.csv', header=None)
 # rmse = pd.to_numeric(np.array(MAE[2])[1:]).reshape((46, 67))
 
 #reading netcdf
@@ -64,21 +64,21 @@ for i in index30:
         denominatorSum = np.zeros(shape=(75, 110))
         for k in range(1, 25):
             print(i, j, k)
-            a = rain_models[i,j,k,:,:]
-            b = np.array(pd.to_numeric(MAE[k+1], errors='coerce').fillna(0))[1:].reshape((75, 110))
-            b = b + 1
-            a[a > 300000] = np.nan
-            b[b > 300000] = np.nan
-            print(a)
+            a = rain_models[i,j,k,1:76,1:111]
+            b = np.array(pd.to_numeric(RMSE[k+1], errors='coerce').fillna(0))[1:].reshape((75, 110))
+            # b = b + 1
+            a[a > 30000] = np.nan
+            b[b > 30000] = np.nan
+            # print(a)
             # print(b)
             if not np.isnan(a).all():
                 numerator = np.array(a) / np.array(b)
                 denominator = 1 / np.array(b)
                 # denominator[denominator > 1000] = 0
-                numerator[np.isnan(numerator)] = 0
-                numerator[np.isinf(numerator)] = 0
-                denominator[np.isnan(denominator)] = 0
-                denominator[np.isinf(denominator)] = 0
+                # numerator[np.isnan(numerator)] = 0
+                # numerator[np.isinf(numerator)] = 0
+                # denominator[np.isnan(denominator)] = 0
+                # denominator[np.isinf(denominator)] = 0
                 # print(numerator)
                 # print(b)
                 # print(denominator)
