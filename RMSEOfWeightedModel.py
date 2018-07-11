@@ -1,6 +1,7 @@
 import csv
 from netCDF4 import Dataset
 from numpy import *
+import numpy as np
 
 #reading netcdf
 netcdf_entire_dataset = Dataset("summing_dataset.nc", "r")
@@ -49,7 +50,7 @@ for y in range(1, 45): # 46 y-coordinates
         rain100 = []
         for d in index30:
             original_data.append(np.array(rain_models[d, :10, 0, y, x]))  # real data
-            rain100.append(np.array(rain_models[d, :10, y, x]))  # model data
+            rain100.append(np.array(weighted_model[d, :10, y, x]))  # model data
         # rain100[rain100>30000] = np.nan
 
         # print(sqrt(power(abs(original_data - rain100), 2)))
