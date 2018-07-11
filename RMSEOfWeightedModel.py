@@ -28,9 +28,13 @@ check.write(', ')
 check.write(str('X'))
 check.write('\n')
 
-for y in range(46): # 46 y-coordinates
+for y in range(1, 45): # 46 y-coordinates
     # print('model:', i, 'day:', j)
-    for x in range(67): # 67 x-coordinates
+    for x in range(1, 66): # 67 x-coordinates
+        tempCheck = rain_models[:20, :10, 0, y, x]
+        if not tempCheck.any():
+            continue
+
         check.write(str(y))
         check.write(', ')
         check.write(str(x))

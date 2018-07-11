@@ -3,12 +3,12 @@ import csv
 from netCDF4 import Dataset
 
 #reading netcdf
-netcdf_entire_dataset = Dataset("summing_dataset.nc", "r")
+netcdf_entire_dataset = Dataset("summing_dataset15_15.nc", "r")
 rain_models = netcdf_entire_dataset.variables['summing_models']
 # models_error_rate_file = netcdf_entire_dataset.variables['models'][:]
 
 #reading netcdf
-netcdf_entire_dataset2 = Dataset("mae_weighted_model.nc", "r") #change here
+netcdf_entire_dataset2 = Dataset("mae_weighted_model_15x15.nc", "r") #change here
 weighted_model = netcdf_entire_dataset2.variables['weighted_model']
 
 with open('random30.csv') as csvf:
@@ -20,7 +20,7 @@ np.set_printoptions(formatter={'float': '{: 0.4f}'.format})
 np.seterr(divide='ignore', invalid='ignore')
 
 #creating csv file  #change here
-check = open('Model1_MAE.csv', 'w') #Model 1 means MAE based model, Model 2 means RMSE based model
+check = open('Model1_MAE15x15.csv', 'w') #Model 1 means MAE based model, Model 2 means RMSE based model
 check.truncate()
 # writing the headers
 check.write(str('Y'))
@@ -28,9 +28,9 @@ check.write(', ')
 check.write(str('X'))
 check.write('\n')
 
-for y in range(1, 45): # 46 y-coordinates
+for y in range(1, 76): # 46 y-coordinates
     # print('model:', i, 'day:', j)
-    for x in range(1, 66): # 67 x-coordinates
+    for x in range(1, 111): # 67 x-coordinates
         tempCheck = rain_models[:20, :10, 0, y, x]
         if not tempCheck.any():
             continue
@@ -71,6 +71,8 @@ for y in range(1, 45): # 46 y-coordinates
             # print(min,max)
 
             a[a == np.nan] = 0
+            a[a == np.inf] = 0
+            a[a > 100000] = 0
             sum = np.nansum(a) # summing all non-nan values
             count= np.sum(countArr) # summing all counts
             avg = sum / count # this is the MAE
